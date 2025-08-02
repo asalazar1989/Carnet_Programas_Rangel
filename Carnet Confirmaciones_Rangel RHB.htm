@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Carnet de Confirmaciones - Rangel Rehabilitación</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0px;
+      color: #333;
+    }
+    .card {
+      width: 720px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-top: 10px solid #2C2474;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0px;
+    }
+    .logo {
+      height: 100px;
+    }
+    .title {
+      color: #2C2474;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    table.details, table.schedule {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table.details td {
+      padding: 6px 12px;
+    }
+    table.schedule th {
+      background-color: #2C2474;
+      color: white;
+      padding: 2px;
+      font-size: 0.85rem;
+    }
+    table.schedule td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 4px;
+    }
+    table.schedule input[type="time"] {
+      width: 100%;
+      font-size: 0.6rem;
+    }
+    .footer {
+      margin-top: 1px;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #666;
+    }
+    .signature {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+    .buttons {
+      margin-top: 1px;
+      text-align: center;
+    }
+    .buttons button {
+      margin: x;
+      padding: 10px 20px;
+      background-color: #2C2474;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .buttons button:hover {
+      background-color: #1b174d;
+    }
+    input[type="time"]::placeholder {
+      color: transparent;
+    }
+    input[type="time"] {
+      color: transparent;
+    }
+    input[type="time"]:valid {
+      color: black;
+    }
+    @media print {
+      .buttons {
+        display: none !important;
+      }
+      input[type="time"]:not(:valid) {
+        color: white !important;
+      }
+    }
+    #pdf-success {
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #2C2474;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 1212px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+<div class="card" id="carnet">
+  <div class="header">
+    <img alt="Logo Rangel" class="logo" src="https://i.ibb.co/YBRTC8HX/LOGO-RANGEL-PAGINA.png"/>
+    <div class="title">Carnet Confirmación de citas</div>
+  </div>
+  <style>
+  .form-container {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 0.00001px 12px;
+    margin-bottom: 0.1px;
+  }
+
+  legend {
+    font-weight: bold;
+    font-size: 10px;
+    padding: 0 5px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    margin-bottom: 6px;
+  }
+
+  .form-group {
+    flex: 1 1 10%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: px;
+    white-space: nowrap;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select {
+    padding: 1px 5px;
+    font-size: 11px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
+
+<div class="form-container">
+  <fieldset>
+    <legend>Datos personales</legend>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" value="Eliz Caballero López" />
+      </div>
+      <div class="form-group">
+        <label>Documento:</label>
+        <input type="text" value="1044233415" />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Información del programa</legend>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Programa:</label>
+        <input type="text" value="Cuidarte" />
+      </div>
+      <div class="form-group">
+        <label>Intensidad:</label>
+        <input type="text" value="3,5 sesiones a la semana" />
+      </div>
+      <div class="form-group">
+        <label>Fecha de inicio:</label>
+        <input type="date" />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Información de aseguramiento</legend>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Asegurador:</label>
+        <select>
+          <option disabled selected>Seleccione el asegurador</option>
+          <option>COMPENSAR</option>
+          <option>SANITAS</option>
+          <option>POSITIVA</option>
+          <option>COLMENA</option>
+          <option>COLSANITAS</option>
+          <option>ECOPETROL</option>
+          <option>PARTICULAR</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Convenio:</label>
+        <select>
+          <option disabled selected>Seleccione el convenio</option>
+          <option>PAC - PLAN COMPLEMENTARIO</option>
+          <option>POS</option>
+          <option>PREMIUM</option>
+          <option>NEURODESARROLLO</option>
+          <option>PRI</option>
+          <option>ARTICUIDAR</option>
+          <option>PREPAGADA</option>
+          <option>PARTICULAR</option>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Ubicación</legend>
+    <div class="form-row">
+      <div class="form-group" style="flex: 1 1 100%;">
+        <label>Dirección:</label>
+        <select>
+          <option disabled selected>Seleccione la sede de atención</option>
+          <option>CL 20 (Avenida de las Américas) # 43A - 32 - Bogotá D.C.</option>
+          <option>Calle 134 No. 7 - 83 Torre 1 Piso 2 - Bogotá D.C.</option>
+          <option>Cra 7B Bis # 132-38 Piso 5 Ed. Forest Medical Center - Bogotá D.C.</option>
+          <option>Cra 7B Bis # 132-38 Piso 6 Ed. Forest Medical Center - Bogotá D.C.</option>
+          <option>Avenida Calle 26 (Avenida El Dorado) # 69 - 76 - Bogotá D.C.</option>
+          <option>Cr. 53 #68B - 13 barrio El Prado - Barranquilla</option>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+  <table class="schedule">
+  <tr>
+    <th>Terapia</th>
+    <th>LUNES</th>
+    <th>MARTES</th>
+    <th>MIERCOLES</th>
+    <th>JUEVES</th>
+    <th>VIERNES</th>
+    <th>SABADO</th>
+  </tr>
+  <tr>
+    <td><strong>Física</strong></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+  </tr>
+  <tr>
+    <td><strong>Ocupacional</strong></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+  </tr>
+  <tr>
+    <td><strong>Fonoaudiología</strong></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+  </tr>
+  <tr>
+    <td><strong>Psicología</strong></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+  </tr>
+  <tr>
+    <td><strong>Neuropsicología</strong></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+    <td><input type="time"/><br/><input type="time"/></td>
+  </tr>
+</table>
+
+  <div class="signature">
+    Entregado por: <input type="text" placeholder="Nombre quien Entrega el Carnet"/>
+  </div>
+  <div class="signature">
+    Observaciones: <input type="text" placeholder=""/>
+  </div>
+  <div class="buttons no-print">
+    <button onclick="generarPDF()">📄 Descargar como PDF</button>
+    <button onclick="limpiarFormulario()">🪟 Limpiar</button>
+  </div>
+  <style>
+  .recomendaciones {
+    font-size: 0.8rem;
+    color: #444;
+    margin-top: 20px;
+    line-height: 1;
+  }
+  .recomendaciones a {
+    color: #2C2474;
+    text-decoration: none;
+  }
+  .recomendaciones a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="recomendaciones">
+  <strong>Recomendaciones:</strong><br/>
+  • Presentarse al menos 20 minutos antes de la hora programada para realizar el proceso de facturación.<br/>
+  • Asistir con ropa cómoda adecuada para la terapia (por ejemplo:pantaloneta, manga corta o según el área a tratar).<br/>
+  • Llevar una toalla mediana de uso personal para la sesión.<br/><br/>
+  </div>
+
+  <div class="footer">
+    Rangel Rehabilitación &copy; 2025 <strong>"Dedicados a la Excelencia"</strong><br/>
+    <a href="https://rangelrehabilitacion.com.co">www.rangelrehabilitacion.com.co</a>
+  </div>
+</div>
+
+<!-- Banner de éxito -->
+<div id="pdf-success">✅ Carnet generado exitosamente</div>
+
+<script>
+  function generarPDF() {
+    document.querySelectorAll('.no-print').forEach(el => el.style.display = 'none');
+
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    timeInputs.forEach(input => {
+      if (input.value) {
+        const time24 = input.value;
+        const [hours, minutes] = time24.split(':');
+        const ampm = hours < 12 ? 'AM' : 'PM';
+        const hour12 = (hours % 12) || 12;
+        const time12 = `${hour12}:${minutes} ${ampm}`;
+
+        const timeText = document.createElement('div');
+        timeText.innerHTML = `<span><strong>${time12}</strong></span>`;
+        timeText.classList.add('time-print');
+
+        input.style.display = 'none';
+        input.parentNode.insertBefore(timeText, input.nextSibling);
+      }
+    });
+
+    const element = document.getElementById('carnet');
+    const opt = {
+      margin: 0.2,
+      filename: 'Carnet_Rangel.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      document.querySelectorAll('.no-print').forEach(el => el.style.display = 'block');
+      document.querySelectorAll('.time-print').forEach(el => el.remove());
+      timeInputs.forEach(input => input.style.display = 'inline');
+
+      const successBanner = document.getElementById('pdf-success');
+      successBanner.style.display = 'block';
+      setTimeout(() => {
+        successBanner.style.display = 'none';
+      }, 3000);
+    });
+  }
+
+  function limpiarFormulario() {
+    document.querySelectorAll('input').forEach(input => {
+      if (input.type === 'text' || input.type === 'date' || input.type === 'time') {
+        input.value = '';
+      }
+    });
+    document.querySelectorAll('select').forEach(select => {
+      select.selectedIndex = 0;
+    });
+  }
+</script>
+</body>
+</html>
